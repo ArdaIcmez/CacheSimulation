@@ -1,7 +1,7 @@
-hello world 
+#include <iostream>
+#include <cstdlib>
 
-eve
-
-dhara is here
-arda
-
+int main(int argc, char **argv) {
+  std::cout << "Hello World" << std::endl;
+  return EXIT_SUCCESS;
+}
