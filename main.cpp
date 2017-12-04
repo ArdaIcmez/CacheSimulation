@@ -1,8 +1,10 @@
 #include <iostream>
 #include <cstdlib>
+#include "simulation.h"
 
 int main(int argc, char **argv) {
-  std::cout << "Hello World" << std::endl;
-std::cout << "dhara i shere" << std::endl;
+  Simulation sim = new Simulation();
+  sim->start();
+  delete sim;
   return EXIT_SUCCESS;
 }
