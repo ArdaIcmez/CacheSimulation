@@ -1,0 +1,42 @@
+Switch options:
+
+./simulation (<mode_cache>(<Cache>)*)*
+
+<mode_cache>:
+0 : None
+1 : Split
+2 : Unified
+
+and with <Cache> being:
+<associativity> <capacity> <linesize> <replacement_algorithm> <mode_allocate>
+
+<associativity>:
+0 : Fully Associative
+1 : Direct-Mapped
+2 : 2 way set-associative
+4 : 4 way set-associative
+n : n way set-associative (n must be a power of 2)
+
+<capacity>:
+number of bytes
+
+<linesize>:
+number of linesize
+
+<replacement_algorithm>:
+0 : No replacement algorithm
+1 : LRU
+2 : RND
+3 : NMRU
+4 : FIFO
+
+<mode_allocate>:
+0 : write-allocate
+1 : not write-allocate
+
+ex : unified, direct-mapped L1 only, total 8192 bytes, linesize=32, write-allocate
+./simulation 2 1 8192 32 0 0
+
+ex : unified, direct-mapped L1 only, total 8192 bytes, linesize=32, write-allocate,
+     split L2, fully-associative 16K I-Cache with linesize=32 LRU and don't write allocate, 2-way 32K D-cache with linesize = 64 RND and write allocate,
+./simulation 2 1 8192 32 0 0 , 1 0 16384 32 1 1 , 2 32768 64 2 0  
