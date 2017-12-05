@@ -8,5 +8,6 @@ class Simulation {
  Simulation() {}
   void analyseAdd(int type, int status);
   void printResult();
+  void formCaches(std::vector<std::string>);
   void start();
 };

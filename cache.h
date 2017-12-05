@@ -2,13 +2,15 @@
 #include <map>
 #include <cmath>
 #include "instruction.h"
+#include <vector>
+
 #define HIT 0
 #define COMP 1
 #define CONF 2
 #define CAP 3
 
 class Cache {
-  typedef std::map<int, std::string> Map_t;
+  typedef std::map<int,std::vector<size_t> > Map_t;
   size_t capacity;
   size_t blockSize;
   int type; //Direct-Mapped, Set-Associative, FA
@@ -20,5 +22,6 @@ Map_t *myCache;
  public:
  Cache(size_t cap, size_t bs, int assoc, bool aWrite);
  int checkHit(const std::string &instr);
- void insertCache(Instruction instr);
+ size_t checkReplacement(size_t index);
+ void insertCache(Instruction instr, size_t replaceIndex);
 };

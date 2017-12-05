@@ -26,7 +26,7 @@ void Simulation::printResult() {
 }
 
 void Simulation::start(const std::string &filename) {
-// Go in a loop to read file, and call required functions
+  // Go in a loop to read file, and call required functions
   std::ifstream ifs(filename);
   if (ifs.open()) {
     std::string line;
@@ -34,9 +34,11 @@ void Simulation::start(const std::string &filename) {
       std::getline(ifs, line);
       int type = line[0] - '0';
       line = line.substr(2);  // get the hex address
-      //Call caches, L2 first then L1 if miss
+      //Call get caches to get the ones that are gonna be processed
+      //From order, do following:
       //Get the result of checkHit of that cache
       //Call analyseAdd(type,result);
+      //Go back if it's a miss
     }
   } else {
     std::cerr << "Couldn't open the test file!" << std::endl;
