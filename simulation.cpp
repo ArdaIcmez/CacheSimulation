@@ -1,29 +1,17 @@
-void Simulation::analyseAdd(int type, bool status) {
-  /*
-    bool here signifies whether the operation was a hit or a miss
-
-   */
-  int incr = 0;
-  if (status) {
-    incr++;
-  }
-  
+void Simulation::analyseAdd(int type, int status) {
+  //type is the type of instruction, status is the result of hit or miss
   switch (type) {
   case 0 :
-    noInstr++;
-    instrHit += incr;
+    instrSt.addResult(status);
     break;
   case 1:
-    noRead++;
-    readHit += incr;
+    readSt.addResult(status);
     break;
   case 2:
-    noWrite++;
-    writeHit += incr;
+    writeSt.addResult(status);
     break;
   default:
-    noMisc++;
-    miscHit += incr;
+    miscSt.addResult(status);
     break;
     }
 }
@@ -34,4 +22,5 @@ void Simulation::printResult() {
 
 void Simulation::start() {
   // Go in a loop to read file, and call required functions
+  
 }
