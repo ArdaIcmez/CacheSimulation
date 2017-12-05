@@ -5,7 +5,7 @@ Cache::Cache(size_t cap, size_t bs, int type, bool aWrite):
   if (type == 0) { // Fully Associtive
     indexSize = type;
   } else {
-    indexSize = cap / type; // n way set-associtive, DM = 1
+    indexSize = log2(cap / type); // n way set-associtive, DM = 1
   }
 }
 
