@@ -6,7 +6,7 @@ class Simulation {
   Stats writeSt;
   Stats miscSt;
  Simulation() {}
-  void analyseAdd(int type, bool status);
+  void analyseAdd(int type, int status);
   void printResult();
   void start();
 };

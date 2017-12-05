@@ -1,5 +1,5 @@
 #include <sstream>
-
+#include <cmath>
 class Instruction {
   void parseInstr(const std::string &instr, int indSize, int offSize);
  public:

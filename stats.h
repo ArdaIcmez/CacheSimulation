@@ -11,10 +11,10 @@ class Stats {
     total++;
     switch (type) {
     case 0 :
-      hit++
+      hit++;
       break;
     case 1:
-      compMiss++
+      compMiss++;
       break;
     case 2:
       confMiss++;

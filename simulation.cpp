@@ -1,3 +1,4 @@
+#include "simulation.h"
 void Simulation::analyseAdd(int type, int status) {
   //type is the type of instruction, status is the result of hit or miss
   switch (type) {
