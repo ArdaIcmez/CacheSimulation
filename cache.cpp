@@ -9,7 +9,7 @@ Cache::Cache(size_t lvl, size_t cap, size_t bs, int type, bool aWrite):
   }
 }
 
-int Cache::checkHit(const std::string &instr) {
+int Cache::checkHit(const std::string &instr, bool isWrite) {
   //The heart of the homework, most things will be done here depending on different types
   Instruction curInstr(instr, indexSize, offsetSize);
   //Check the map if it's a hit or a miss
@@ -18,6 +18,11 @@ int Cache::checkHit(const std::string &instr) {
   //call insertCache(curInst, value of find replacement) to insert into cache
   //Return HIT, COMP depending on result
   return HIT;
+}
+
+size_t Cache::checkReplacement(size_t index) {
+  // Go to that index in the map, and figure out the block to replace
+  
 }
 
 void Cache::insertCache(Instruction instr, size_t replaceIndex) {

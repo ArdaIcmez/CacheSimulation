@@ -5,7 +5,7 @@
 #include "simulation.h"
 
 std::string cachify(std::string type,std::string cacheSpecs) {
-  std::string cacheStr = type + "-" +cacheSpecs;
+  std::string cacheStr = type +cacheSpecs;
   return cacheStr;
 }
 
@@ -44,18 +44,18 @@ std::vector<std::string> readCmdline (int argc, char** argv) {
   std::vector<std::string> caches;
   if (l1Type != " ") {
     if (l1Type == "S") {
-      caches.push_back(cachify("1-I",l11Specs));
-      caches.push_back(cachify("1-D", l12Specs));
+      caches.push_back(cachify("1I",l11Specs));
+      caches.push_back(cachify("1D", l12Specs));
     } else if (l1Type == "U") {
-    caches.push_back(cachify("1-U", l11Specs));
+    caches.push_back(cachify("1U", l11Specs));
     }
   }
   if (l2Type != " ") {
     if (l2Type == "S") {
-      caches.push_back(cachify("2-I",l21Specs));
-      caches.push_back(cachify("2-D", l22Specs));
+      caches.push_back(cachify("2I",l21Specs));
+      caches.push_back(cachify("2D", l22Specs));
     }else if (l2Type == "U") {
-      caches.push_back(cachify("2-U", l21Specs));
+      caches.push_back(cachify("2U", l21Specs));
     }
   }
   return caches;
