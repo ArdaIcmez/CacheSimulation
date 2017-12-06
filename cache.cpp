@@ -1,6 +1,6 @@
 #include "cache.h"
-Cache::Cache(size_t cap, size_t bs, int type, bool aWrite):
-  capacity(cap), blockSize(bs), type(type), allocWrite(aWrite) {
+Cache::Cache(size_t lvl, size_t cap, size_t bs, int type, bool aWrite):
+  level(lvl), capacity(cap), blockSize(bs), type(type), allocWrite(aWrite) {
   offsetSize = log2(bs);
   if (type == 0) { // Fully Associtive
     indexSize = type;

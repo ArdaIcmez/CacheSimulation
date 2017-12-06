@@ -25,15 +25,24 @@ void Simulation::printResult() {
   // Print that result with numbers like the one in website, calculating stuff should be straightforward
 }
 
+void Simulation::formCaches(std::vector<std::string> caches) {
+  std::vector<std::string>::iterator it;
+  for (it = caches.begin(); it != caches.end(); ++it) {
+    std::cout << *it << std::endl;
+  }
+  std::cout << "printing cache specs finished" << std::endl;
+}
+
 void Simulation::start(const std::string &filename) {
   // Go in a loop to read file, and call required functions
-  std::ifstream ifs(filename);
-  if (ifs.open()) {
+  std::ifstream ifs(filename.c_str());
+  if (ifs.is_open()) {
     std::string line;
     while (ifs.good()) {
       std::getline(ifs, line);
       int type = line[0] - '0';
       line = line.substr(2);  // get the hex address
+      std::cout << type << std::endl;
       //Call get caches to get the ones that are gonna be processed
       //From order, do following:
       //Get the result of checkHit of that cache

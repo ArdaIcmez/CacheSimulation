@@ -1,4 +1,5 @@
 #include "stats.h"
+#include <vector>
 class Simulation {
  public:
   Stats instrSt;
@@ -8,6 +9,6 @@ class Simulation {
  Simulation() {}
   void analyseAdd(int type, int status);
   void printResult();
-  void formCaches(std::vector<std::string>);
-  void start();
+  void formCaches(std::vector<std::string> caches);
+  void start(const std::string &filename);
 };
