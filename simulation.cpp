@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <sstream>
 #include "simulation.h"
 
 void Simulation::analyseAdd(int type, int status) {
@@ -27,8 +28,28 @@ void Simulation::printResult() {
 
 void Simulation::formCaches(std::vector<std::string> caches) {
   std::vector<std::string>::iterator it;
+  size_t cacheSize;
+  size_t lineSize;
+  bool aWrite = false;
+  std::stringstream ss;
   for (it = caches.begin(); it != caches.end(); ++it) {
-    std::cout << *it << std::endl;
+    std::string cacheStr = *it;
+    size_t sizePos = cacheStr.find("S");
+    size_t linePos = cacheStr.find("L");
+    ss << cacheStr.substr(sizePos+1, linePos - sizePos -1);
+    ss >> cacheSize;
+    ss << cacheStr.substr(linePos+1);
+    ss >> lineSize;
+    if (cacheStr[4] == 'W') {
+      aWrite = true;
+    }
+    if (cacheStr[0] == '1') {
+      l1.push_back(Cache(1, cacheSize, lineSize, cacheStr[2]-'0',
+			   cacheStr[3], aWrite, cacheStr[1]));
+    } else if(cacheStr[1] == '2') {
+      l2.push_back(Cache(2, cacheSize, lineSize, cacheStr[2]-'0',
+			   cacheStr[3], aWrite, cacheStr[1]));
+    }
   }
   std::cout << "printing cache specs finished" << std::endl;
 }
