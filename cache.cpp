@@ -14,11 +14,28 @@ int Cache::checkHit(const std::string &instr, bool isWrite) {
   //The heart of the homework, most things will be done here depending on different types
   Instruction curInstr(instr, indexSize, offsetSize);
   //Check the map if it's a hit or a miss
+  if (Map_t.find(curInstr.tag) == Map_t.end()){
+    size_t replaceIndex = findReplacement();
+    insertCache(curInstr,replaceIndex);
+    return COMP;
+  }
+  
   //if it's a miss, call findReplacement method
   //get the return value of findReplacement
   //call insertCache(curInst, value of find replacement) to insert into cache
   //Return HIT, COMP depending on result
   return HIT;
+}
+
+void printCache(){
+  std::cout<<"level "<<level<<"\n";
+  std::cout<<"capacity "<<capacity<<"\n";
+  std::cout<<"blockSize "<<blockSize<<"\n";
+  std::cout<<"type "<<type<<"\n";
+  std::cout<<"allocWrite"<<allocWrite<<"\n";
+  std::cout<<"indexSize"<<indezSize<<"\n";
+  std::cout<<"offsetSize"<<offsetSize<<"\n";
+  std::cout<<"\n";
 }
 
 size_t Cache::checkReplacement(size_t index) {

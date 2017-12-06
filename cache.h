@@ -27,4 +27,5 @@ Map_t *myCache;
  int checkHit(const std::string &instr, bool isWrite);
  size_t checkReplacement(size_t index);
  void insertCache(Instruction instr, size_t replaceIndex);
+ void printCache();
 };
