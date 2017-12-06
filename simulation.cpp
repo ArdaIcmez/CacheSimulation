@@ -28,30 +28,32 @@ void Simulation::printResult() {
 
 void Simulation::formCaches(std::vector<std::string> caches) {
   std::vector<std::string>::iterator it;
-  size_t cacheSize;
-  size_t lineSize;
+  size_t cacheSize = 0;
+  size_t lineSize = 0;
   bool aWrite = false;
-  std::stringstream ss;
   for (it = caches.begin(); it != caches.end(); ++it) {
+    std::stringstream ss;
     std::string cacheStr = *it;
     size_t sizePos = cacheStr.find("S");
-    size_t linePos = cacheStr.find("L");
+    size_t linePos = cacheStr.find("P");
     ss << cacheStr.substr(sizePos+1, linePos - sizePos -1);
-    ss >> cacheSize;
+    ss << " ";
     ss << cacheStr.substr(linePos+1);
+    ss >> cacheSize;
     ss >> lineSize;
     if (cacheStr[4] == 'W') {
       aWrite = true;
     }
     if (cacheStr[0] == '1') {
-      l1.push_back(Cache(1, cacheSize, lineSize, cacheStr[2]-'0',
-			   cacheStr[3], aWrite, cacheStr[1]));
+      Cache c(1, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
+      c.printCache();
+      l1.push_back(c);
     } else if(cacheStr[1] == '2') {
-      l2.push_back(Cache(2, cacheSize, lineSize, cacheStr[2]-'0',
-			   cacheStr[3], aWrite, cacheStr[1]));
+      Cache c(1, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
+      c.printCache();
+      l2.push_back(c);
     }
   }
-  std::cout << "printing cache specs finished" << std::endl;
 }
 
 void Simulation::start(const std::string &filename) {

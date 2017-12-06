@@ -21,7 +21,7 @@ class Cache {
   size_t indexSize;
   size_t offsetSize;
   //Need to add different stuff for replacement algorithm
-Map_t *myCache;
+Map_t myCache;
  public:
  Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, bool isWrite);
