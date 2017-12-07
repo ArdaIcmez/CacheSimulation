@@ -18,28 +18,55 @@ int Cache::checkHit(const std::string &instr, bool isWrite) {
   //The heart of the homework, most things will be done here depending on different types
   Instruction curInstr(instr, indexSize, offsetSize);
   int result = COMP;
+  size_t replIndex = 0;
   //Check the map if it's a hit or a miss
   if (myCache.find(curInstr.tag) == myCache.end()){
-    insertCache(curInstr,0,false); // COMP
+    insertCache(curInstr,0,false); // COMP, replIndex is 0
   } else {
-    if (std::find((myCache[curInstr.index]).begin(),
-		  (myCache[curInstr.index]).end(),
-		  curInstr.tag) != myCache[curInstr.index].end()) {
-      result = HIT; //HIT
+    std::vector<size_t>::iterator it;
+    bool hit = false;
+    for (it = myCache[curInstr.index].begin(); it != myCache[curInstr.index].end(); ++it) {
+      if (*it == curInstr.tag) {
+	hit = true;
+	replIndex = it - myCache[curInstr.index].begin(); // get index of hit
+	break;
+      }
+    }
+    if (hit) {
+      result = HIT; //HIT   
     } else { //Miss
-      if ((myCache[curInstr.index]).size() < pow(2, indexSize)) { //Have space
+      if ((myCache[curInstr.index]).size() < pow(2,indexSize)) { //Have space
 	insertCache(curInstr,0,false); // COMP
+	replIndex = myCache[curInstr.index].size() - 1;//Last element of v
       } else { // Replacement
 	if (tags.find(curInstr.tag) == tags.end()) { // First time for tag
 	  tags.insert(curInstr.tag); //COMP
 	} else {
 	  result = ((type == 0) ? CAP : CONF);
 	}
-	insertCache(curInstr, checkReplacement(curInstr.index), true);
+	replIndex = checkReplacement(curInstr.index);//index is the one here
+	insertCache(curInstr, replIndex, true);
       }
     }
   }
+  //Add to lruMap if that's the algo
+  if (replAlgo == 'L' || replAlgo == 'N') {
+    addUsedList(curInstr.index,replIndex);
+  }
   return result;
+}
+
+void Cache::addUsedList(size_t setIndex, size_t index) {
+  //if it exists in list, remove it
+  std::list<size_t>::iterator it;
+  for (it = lruMap[setIndex].begin();it != lruMap[setIndex].end(); ++it) {
+    if (*it == index) {
+      lruMap[setIndex].erase(it);
+      break;
+    }
+  }
+  //Add to back of list
+  lruMap[setIndex].push_back(index);
 }
 
 void Cache::printCache(){

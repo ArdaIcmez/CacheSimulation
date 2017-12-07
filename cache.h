@@ -26,11 +26,12 @@ class Cache {
   Map_t myCache;
   std::map<size_t, std::queue<size_t> > fifoMap;
   std::set<size_t> tags;
-  std::map<size_t, std::list<size_t> > lruMap; 
+  std::map<size_t, std::list<size_t> > lruMap;//front is LRU, back is MRU 
  public:
  Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, bool isWrite);
  size_t checkReplacement(size_t index);
  void insertCache(Instruction instr, size_t replaceIndex, bool isReplace);
  void printCache();
+ void addUsedList(size_t setIndex, size_t index);
 };
