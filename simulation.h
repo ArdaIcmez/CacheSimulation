@@ -12,6 +12,7 @@ class Simulation {
  Simulation() {}
   void analyseAdd(int type, int status);
   void printResult();
+  void assignCaches(Cache ** c1, Cache ** c2, int type);
   void formCaches(std::vector<std::string> caches);
-  void start(const std::string &filename);
+  void start(char *filename);
 };

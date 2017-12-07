@@ -4,10 +4,8 @@ Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWri
   allocWrite(aWrite),cacheType(cType) {
   offsetSize = log2(bs);
   size_t i = 1024;
-  while (i/1000 != capacity) {
-    i *= 2;
-  }
-  capacity = i;
+  
+  capacity *= i;
   if (type == 0) { // Fully Associtive
     indexSize = type;
   } else {
@@ -45,10 +43,28 @@ void Cache::printCache(){
 
 size_t Cache::checkReplacement(size_t index) {
   // Go to that index in the map, and figure out the block to replace
+  switch (replAlgo) {
+  case 'L': //Least recently used alrogithm
+
+    break;
+  case 'R': //Random number algorithm
+
+    break;
+  case 'N': //Not most recently used algorithm
+
+    break;
+  case 'F': //Fifo algorithm
+
+    break;
+  default :
+    std::cerr << "Something went wrong with replacement algorithms!" << std::endl;
+    break;
+  }
   return 0;
 }
 
 void Cache::insertCache(Instruction instr, size_t replaceIndex) {
   //Easy, just add to map if called
+  //Also populate replacement algorithms data structures
 
 }
