@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
   //Read from command line
   Simulation *sim = new Simulation();
   sim->formCaches(readCmdline(argc, argv));
-  //sim->start(argv[1]);
+  sim->start(argv[1]);
   delete sim;
   return EXIT_SUCCESS;
 }

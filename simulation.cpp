@@ -56,6 +56,7 @@ void Simulation::formCaches(std::vector<std::string> caches) {
   size_t lineSize = 0;
   bool aWrite = false;
   for (it = caches.begin(); it != caches.end(); ++it) {
+    std::cout << *it << std::endl;
     std::stringstream ss;
     std::string cacheStr = *it;
     size_t sizePos = cacheStr.find("S");
@@ -72,8 +73,8 @@ void Simulation::formCaches(std::vector<std::string> caches) {
       Cache c(1, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
       c.printCache();
       l1.push_back(c);
-    } else if(cacheStr[1] == '2') {
-      Cache c(1, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
+    } else if(cacheStr[0] == '2') {
+      Cache c(2, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
       c.printCache();
       l2.push_back(c);
     }
