@@ -26,10 +26,30 @@ void Simulation::printResult() {
   // Print that result with numbers like the one in website, calculating stuff should be straightforward
 }
 
-void assignCaches(Cache * c1, Cache * c2) {
-  
+void Simulation::assignCaches(Cache ** c1, Cache ** c2, int type) {
+  /*
+    First cache is always instruction, second cache is always data
+*/
+  *c2 = NULL;
+  if (type == 0) {
+    *c1 = &(l1[0]);
+    if (l2.size() > 0) {
+      *c2 = &(l2[0]);
+    }
+  } else {
+    if (l1.size() > 1) {
+      *c1 = (&l1[1]);
+    } else {
+      *c1 = (&l1[0]);
+    }
+    if (l2.size() > 1) {
+      *c2 = (&l2[1]);
+    } else if (l2.size() > 0) {
+      *c2 = (&l2[0]);
+    }
+  }
 }
-
+  
 void Simulation::formCaches(std::vector<std::string> caches) {
   std::vector<std::string>::iterator it;
   size_t cacheSize = 0;
@@ -65,12 +85,17 @@ void Simulation::start(const std::string &filename) {
   std::ifstream ifs(filename.c_str());
   if (ifs.is_open()) {
     std::string line;
+    Cache *c1;
+    Cache *c2;
     while (ifs.good()) {
       std::getline(ifs, line);
       int type = line[0] - '0';
       line = line.substr(2);  // get the hex address
       std::cout << type << std::endl;
       //Call get caches to get the ones that are gonna be processed
+      assignCaches(&c1,&c2,type);
+      c1->printCache();
+      c2->printCache();
       //From order, do following:
       //Get the result of checkHit of that cache
       //Call analyseAdd(type,result);
