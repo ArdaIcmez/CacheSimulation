@@ -62,12 +62,25 @@ size_t Cache::checkReplacement(size_t index) {
 
     break;
   case 'R': //Random number algorithm
+    srand((unsigned)time(0));
+    if(type == 0){
+      setNum = pow(2,indexSize);
+      return (rand() % setNum);
+    }else{
+      return (rand()) % type);
+    }
 
     break;
   case 'N': //Not most recently used algorithm
 
     break;
   case 'F': //Fifo algorithm
+    if(fifoMap[index].empty()) {
+      return 0; 
+    }
+    size_t way = fifoMap[index].front();
+    fifoMap[index].pop();
+    return way;
 
     break;
   default :
