@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <unistd.h>
+#include <cstring>
 #include <vector>
 #include "simulation.h"
 
@@ -65,9 +66,10 @@ int main(int argc, char **argv) {
   //Either read the cache info here and pass it into the simulation, or do it manually inside simulation.
   //Doing it manually will save us redundant coding.
   //Read from command line
+  char *filename = strdup(argv[1]);
   Simulation *sim = new Simulation();
   sim->formCaches(readCmdline(argc, argv));
-  sim->start(argv[1]);
+  sim->start(filename);
   delete sim;
   return EXIT_SUCCESS;
 }

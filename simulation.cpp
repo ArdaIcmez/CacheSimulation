@@ -81,9 +81,9 @@ void Simulation::formCaches(std::vector<std::string> caches) {
   }
 }
 
-void Simulation::start(const std::string &filename) {
+void Simulation::start(char *filename) {
   // Go in a loop to read file, and call required functions
-  std::ifstream ifs(filename.c_str());
+  std::ifstream ifs(filename);
   if (ifs.is_open()) {
     std::string line;
     Cache *c1;
