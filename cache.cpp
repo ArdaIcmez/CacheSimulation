@@ -37,8 +37,6 @@ int Cache::checkHit(const std::string &instr, bool isWrite) {
 	}
 	insertCache(curInstr, checkReplacement(curInstr.index), true);
       }
-      //Add to pqueue data structure!
-      
     }
   }
   return result;
