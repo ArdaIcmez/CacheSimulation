@@ -48,6 +48,7 @@ size_t Cache::checkReplacement(size_t index) {
 
     break;
   case 'R': //Random number algorithm
+    srand((unsigned)time(0));
     if(type == 0){
       setNum = pow(2,indexSize);
       return (rand() % setNum);
