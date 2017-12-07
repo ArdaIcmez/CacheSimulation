@@ -57,37 +57,34 @@ void Cache::printCache(){
 
 size_t Cache::checkReplacement(size_t index) {
   // Go to that index in the map, and figure out the block to replace
+  size_t result = 0;
   switch (replAlgo) {
   case 'L': //Least recently used alrogithm
 
     break;
   case 'R': //Random number algorithm
     srand((unsigned)time(0));
-    if(type == 0){
-      setNum = pow(2,indexSize);
-      return (rand() % setNum);
-    }else{
-      return (rand()) % type);
+    if(type == 0) {
+      result = (rand() % (int)(pow(2, indexSize)));
+    } else {
+      result = (rand() % type);
     }
-
     break;
   case 'N': //Not most recently used algorithm
 
     break;
   case 'F': //Fifo algorithm
-    if(fifoMap[index].empty()) {
+    if (fifoMap[index].empty()) {
       return 0; 
     }
-    size_t way = fifoMap[index].front();
+    result = fifoMap[index].front();
     fifoMap[index].pop();
-    return way;
-
     break;
   default :
     std::cerr << "Something went wrong with replacement algorithms!" << std::endl;
     break;
   }
-  return 0;
+  return result;
 }
 
 void Cache::insertCache(Instruction instr, size_t replaceIndex, bool isReplace) {
