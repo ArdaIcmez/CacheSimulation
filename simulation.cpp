@@ -31,7 +31,7 @@ void Simulation::assignCaches(Cache ** c1, Cache ** c2, int type) {
     First cache is always instruction, second cache is always data
 */
   *c2 = NULL;
-  if (type == 0) {
+  if (type == 2) {
     *c1 = &(l1[0]);
     if (l2.size() > 0) {
       *c2 = &(l2[0]);
