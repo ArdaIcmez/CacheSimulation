@@ -24,6 +24,7 @@ class Cache {
 //Need to add different stuff for replacement algorithm
 Map_t myCache;
  std::map<size_t, std::queue<size_t> > fifoMap;
+ //std::map<size_t, std::list<size_t> > lruMap; 
  public:
  Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, bool isWrite);

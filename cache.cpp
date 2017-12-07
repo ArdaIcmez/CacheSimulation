@@ -45,7 +45,20 @@ size_t Cache::checkReplacement(size_t index) {
   // Go to that index in the map, and figure out the block to replace
   switch (replAlgo) {
   case 'L': //Least recently used alrogithm
-
+   /*
+   if (lruMap[index].empty()) {
+	for(size_t i = 0; i<type; i++) {
+          lruMap[index].push_back(i); 
+       } 
+   }
+   size_t way = lruMap[index].front();
+   lruMap[index].pop_front(); 
+   lruMap[index].push_back(way); 
+   return way; 
+  //NOTE NEED TO DO FOLLOWING FOR EVERY HIT:
+  //lruMap[index].remove(way); 
+  //lruMap[index].push_back(way);   
+   */
     break;
   case 'R': //Random number algorithm
     if(type == 0){
