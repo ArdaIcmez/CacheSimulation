@@ -1,4 +1,5 @@
 #include "cache.h"
+#include <algorithm>
 Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType):
   level(lvl), capacity(cap), blockSize(bs), type(assoc), replAlgo(rAlgo),
   allocWrite(aWrite),cacheType(cType) {
@@ -16,18 +17,31 @@ Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWri
 int Cache::checkHit(const std::string &instr, bool isWrite) {
   //The heart of the homework, most things will be done here depending on different types
   Instruction curInstr(instr, indexSize, offsetSize);
+  int result = COMP;
   //Check the map if it's a hit or a miss
   if (myCache.find(curInstr.tag) == myCache.end()){
-    size_t replaceIndex = checkReplacement(0);
-    insertCache(curInstr,replaceIndex);
-    return COMP;
+    insertCache(curInstr,0,false); // COMP
+  } else {
+    if (std::find((myCache[curInstr.index]).begin(),
+		  (myCache[curInstr.index]).end(),
+		  curInstr.tag) != myCache[curInstr.index].end()) {
+      result = HIT; //HIT
+    } else { //Miss
+      if ((myCache[curInstr.index]).size() < pow(2, indexSize)) { //Have space
+	insertCache(curInstr,0,false); // COMP
+      } else { // Replacement
+	if (tags.find(curInstr.tag) == tags.end()) { // First time for tag
+	  tags.insert(curInstr.tag); //COMP
+	} else {
+	  result = ((type == 0) ? CAP : CONF);
+	}
+	insertCache(curInstr, checkReplacement(curInstr.index), true);
+      }
+      //Add to pqueue data structure!
+      
+    }
   }
-  
-  //if it's a miss, call findReplacement method
-  //get the return value of findReplacement
-  //call insertCache(curInst, value of find replacement) to insert into cache
-  //Return HIT, COMP depending on result
-  return HIT;
+  return result;
 }
 
 void Cache::printCache(){
@@ -43,6 +57,7 @@ void Cache::printCache(){
 
 size_t Cache::checkReplacement(size_t index) {
   // Go to that index in the map, and figure out the block to replace
+  size_t result = 0;
   switch (replAlgo) {
   case 'L': //Least recently used alrogithm
    /*
@@ -61,35 +76,35 @@ size_t Cache::checkReplacement(size_t index) {
    */
     break;
   case 'R': //Random number algorithm
-    if(type == 0){
-      setNum = pow(2,indexSize);
-      return (srand((unsigned)time(0)) % setNum);
-    }else{
-      return (srand((unsigned)time(0)) % type);
+    srand((unsigned)time(0));
+    if(type == 0) {
+      result = (rand() % (int)(pow(2, indexSize)));
+    } else {
+      result = (rand() % type);
     }
-
     break;
   case 'N': //Not most recently used algorithm
 
     break;
   case 'F': //Fifo algorithm
-    if(fifoMap[index].empty()) {
+    if (fifoMap[index].empty()) {
       return 0; 
     }
-    size_t way = fifoMap[index].front();
+    result = fifoMap[index].front();
     fifoMap[index].pop();
-    return way;
-
     break;
   default :
     std::cerr << "Something went wrong with replacement algorithms!" << std::endl;
     break;
   }
-  return 0;
+  return result;
 }
 
-void Cache::insertCache(Instruction instr, size_t replaceIndex) {
-  //Easy, just add to map if called
-  //Also populate replacement algorithms data structures
-
+void Cache::insertCache(Instruction instr, size_t replaceIndex, bool isReplace) {
+  fifoMap[instr.index].push(instr.tag); //Add to our fifo map
+  if (isReplace) {
+    (myCache[instr.index]).at(replaceIndex) = instr.tag;
+  } else {
+    myCache[instr.index].push_back(instr.tag);
+  }
 }

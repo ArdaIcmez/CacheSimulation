@@ -4,7 +4,7 @@
 #include "instruction.h"
 #include <queue>
 #include <vector>
-
+#include <set>
 #define HIT 0
 #define COMP 1
 #define CONF 2
@@ -25,10 +25,13 @@ class Cache {
 Map_t myCache;
  std::map<size_t, std::queue<size_t> > fifoMap;
  //std::map<size_t, std::list<size_t> > lruMap; 
+
+ std::set<size_t> tags;
+
  public:
  Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, bool isWrite);
  size_t checkReplacement(size_t index);
- void insertCache(Instruction instr, size_t replaceIndex);
+ void insertCache(Instruction instr, size_t replaceIndex, bool isReplace);
  void printCache();
 };

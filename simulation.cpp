@@ -56,7 +56,6 @@ void Simulation::formCaches(std::vector<std::string> caches) {
   size_t lineSize = 0;
   bool aWrite = false;
   for (it = caches.begin(); it != caches.end(); ++it) {
-    std::cout << *it << std::endl;
     std::stringstream ss;
     std::string cacheStr = *it;
     size_t sizePos = cacheStr.find("S");
@@ -71,11 +70,9 @@ void Simulation::formCaches(std::vector<std::string> caches) {
     }
     if (cacheStr[0] == '1') {
       Cache c(1, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
-      c.printCache();
       l1.push_back(c);
     } else if(cacheStr[0] == '2') {
       Cache c(2, cacheSize, lineSize, cacheStr[2]-'0',cacheStr[3], aWrite, cacheStr[1]);
-      c.printCache();
       l2.push_back(c);
     }
   }
@@ -92,13 +89,14 @@ void Simulation::start(char *filename) {
       std::getline(ifs, line);
       int type = line[0] - '0';
       line = line.substr(2);  // get the hex address
-      std::cout << type << std::endl;
       //Call get caches to get the ones that are gonna be processed
       assignCaches(&c1,&c2,type);
       c1->printCache();
-      c2->printCache();
-      //From order, do following:
+      if (c2 != NULL) {
+	c2->printCache();
+      }
       //Get the result of checkHit of that cache
+      //
       //Call analyseAdd(type,result);
       //Go back if it's a miss
     }
