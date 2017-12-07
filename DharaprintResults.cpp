@@ -2,7 +2,11 @@
 #include <iomanip>
 #include <vector>
 int main(void) {
-
+for(size_t = 0; i < 2; i++) {
+Stats instrnSt_t = instrSt[i];
+Stats readSt_t = readSt[i]; 
+Stats writeSt_t = writeSt[i];
+Stats miscSt_t = miscSt[i];   
   //Prints: Metrics Total Instrn Data Read Write Misc
   std::cout<<"Metrics                      Total           Instrn           Data            \
 Read           Write            Misc\n";
@@ -11,11 +15,11 @@ Read           Write            Misc\n";
 
   //Prep for Demand Fetches Line
   double noTotal;
-  double noInstrn = instrSt.hit;
+  double noInstrn = instrSt_t.hit;
   double noData;
-  double noRead = readSt.hit;
-  double noWrite = writeSt.hit;
-  double noMisc = miscSt.hit;
+  double noRead = readSt_t.hit;
+  double noWrite = writeSt_t.hit;
+  double noMisc = miscSt_t.hit;
   noData = noRead + noWrite;
   noTotal = noInstrn + noData;
 
@@ -46,11 +50,11 @@ t) {
   //Prep for Demand Misses Line
   std::vector<double> demandMisses;
   double noTotalM;
-  double noInstrnM = instrSt.compMiss + instrSt.confMiss + instrSt.capMiss;
+  double noInstrnM = instrSt_t.compMiss + instrSt_t.confMiss + instrSt_t.capMiss;
   double noDataM;
-  double noReadM = readSt.compMiss + readSt.confMiss + readSt.capMiss;
-  double noWriteM = writeSt.compMiss + writeSt.confMiss + writeSt.capMiss;
-  double noMiscM = miscSt.compMiss + miscSt.confMiss + miscSt.capMiss;
+  double noReadM = readSt_t.compMiss + readSt_t.confMiss + readSt_t.capMiss;
+  double noWriteM = writeSt_t.compMiss + writeSt_t.confMiss + writeSt_t.capMiss;
+  double noMiscM = miscSt_t.compMiss + miscSt_t.confMiss + miscSt_t.capMiss;
   noDataM = noReadM + noWriteM;
   noTotalM = noDataM + noInstrnM;
 
@@ -80,11 +84,11 @@ t) {
   //Prep for Compulsory Misses Line
   std::vector<double> CoMisses;
   double noTotalCoM;
-  double noInstrnCoM = instrSt.compMiss;
+  double noInstrnCoM = instrSt_t.compMiss;
   double noDataCoM;
-  double noReadCoM = readSt.compMiss;
-  double noWriteCoM = writeSt.compMiss;
-  double noMiscCoM = miscSt.compMiss;
+  double noReadCoM = readSt_t.compMiss;
+  double noWriteCoM = writeSt_t.compMiss;
+  double noMiscCoM = miscSt_t.compMiss;
   noDataCoM = noReadCoM + noWriteCoM;
   noTotalCoM = noInstrnCoM + noDataCoM;
 
@@ -104,11 +108,11 @@ t) {
   //Prep for Capacity Misses
   std::vector<double> CaMisses;
   double noTotalCaM;
-  double noInstrnCaM = instrSt.capMiss;
+  double noInstrnCaM = instrSt_t.capMiss;
   double noDataCaM;
-  double noReadCaM = readSt.capMiss;
-  double noWriteCaM = writeSt.capMiss;
-  double noMiscCaM = miscSt.capMiss;
+  double noReadCaM = readSt_t.capMiss;
+  double noWriteCaM = writeSt_t.capMiss;
+  double noMiscCaM = miscSt_t.capMiss;
   noDataCaM = noReadCaM + noWriteCaM;
   noTotalCaM = noInstrnCaM + noDataCaM;
 
@@ -128,11 +132,11 @@ t) {
   //Prep for Conflict Misses
   std::vector<double> ConMisses;
   double noTotalConM;
-  double noInstrnConM = instrSt.confMiss;
+  double noInstrnConM = instrSt_t.confMiss;
   double noDataConM;
-  double noReadConM = readSt.confMiss;
-  double noWriteConM = writeSt.confMiss;
-  double noMiscConM = miscSt.confMiss;
+  double noReadConM = readSt_t.confMiss;
+  double noWriteConM = writeSt_t.confMiss;
+  double noMiscConM = miscSt_t.confMiss;
   noDataConM = noReadConM + noWriteConM;
   noTotalConM = noInstrnConM + noDataConM;
 
