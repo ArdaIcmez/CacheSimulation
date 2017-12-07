@@ -4,20 +4,20 @@
 #include <sstream>
 #include "simulation.h"
 
-void Simulation::analyseAdd(int type, int status) {
+void Simulation::analyseAdd(int type, int status, int level) {
   //type is the type of instruction, status is the result of hit or miss
   switch (type) {
   case 0 :
-    instrSt.addResult(status);
+    instrSt[level].addResult(status);
     break;
   case 1:
-    readSt.addResult(status);
+    readSt[level].addResult(status);
     break;
   case 2:
-    writeSt.addResult(status);
+    writeSt[level].addResult(status);
     break;
   default:
-    miscSt.addResult(status);
+    miscSt[level].addResult(status);
     break;
     }
 }
@@ -96,9 +96,11 @@ void Simulation::start(char *filename) {
 	c2->printCache();
       }
       //Get the result of checkHit of that cache
-      //
-      //Call analyseAdd(type,result);
-      //Go back if it's a miss
+      int result = c1->checkHit(line,type);
+      if (result != HIT && c2 != NULL) {
+	analyseAdd(type,c2->checkHit(line,type),2);
+      }
+      analyseAdd(type,result,1);
     }
   } else {
     std::cerr << "Couldn't open the test file!" << std::endl;

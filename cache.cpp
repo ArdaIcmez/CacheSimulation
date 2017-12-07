@@ -14,26 +14,31 @@ Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWri
   }
 }
 
-int Cache::checkHit(const std::string &instr, bool isWrite) {
+int Cache::checkHit(const std::string &instr,int typeI) {
   //The heart of the homework, most things will be done here depending on different types
-  Instruction curInstr(instr, indexSize, offsetSize);
+  Instruction current(instr, indexSize, offsetSize, typeI);
+  curInstr = current;
   int result = COMP;
   size_t replIndex = 0;
   //Check the map if it's a hit or a miss
   if (myCache.find(curInstr.tag) == myCache.end()){
     insertCache(curInstr,0,false); // COMP, replIndex is 0
   } else {
-    std::vector<size_t>::iterator it;
+    std::vector<std::pair<size_t, bool> >::iterator it;
     bool hit = false;
     for (it = myCache[curInstr.index].begin(); it != myCache[curInstr.index].end(); ++it) {
-      if (*it == curInstr.tag) {
+      if ((*it).first == curInstr.tag) {
 	hit = true;
 	replIndex = it - myCache[curInstr.index].begin(); // get index of hit
 	break;
       }
     }
     if (hit) {
-      result = HIT; //HIT   
+      result = HIT; //HIT
+      //Change the bit to dirty if needed
+      if (curInstr.typeInstr == 1) {
+	myCache[curInstr.index][replIndex].second = 1;
+      }
     } else { //Miss
       if ((myCache[curInstr.index]).size() < pow(2,indexSize)) { //Have space
 	insertCache(curInstr,0,false); // COMP
@@ -125,10 +130,20 @@ size_t Cache::checkReplacement(size_t index) {
 }
 
 void Cache::insertCache(Instruction instr, size_t replaceIndex, bool isReplace) {
+  if (instr.typeInstr == 1 && allocWrite == false) {
+    return;
+  }
   fifoMap[instr.index].push(instr.tag); //Add to our fifo map
   if (isReplace) {
-    (myCache[instr.index]).at(replaceIndex) = instr.tag;
+    if (instr.typeInstr == 1) {
+      (myCache[instr.index]).at(replaceIndex).second = 1;
+    }
+    (myCache[instr.index]).at(replaceIndex).first = instr.tag;
   } else {
-    myCache[instr.index].push_back(instr.tag);
+    if (instr.typeInstr == 1) {
+      myCache[instr.index].push_back(std::make_pair(1,instr.tag));
+    } else {
+      myCache[instr.index].push_back(std::make_pair(0,instr.tag));
+    }
   }
 }

@@ -1,9 +1,10 @@
 #include "instruction.h"
-Instruction::Instruction(const std::string &instr, int indSize, int offSize) {
+Instruction::Instruction(const std::string &instr, int indSize, int offSize, int typeI){
+  typeInstr =typeI; 
   parseInstr(instr, indSize, offSize);
 }
 
-void Instruction::parseInstr(const std::string &instr, int indSize, int offSize) {
+void Instruction::parseInstr(const std::string &instr, int indSize, int offSize){
   //Parse the instruction into index offset tag
   unsigned int address;
   std::stringstream ss;
