@@ -4,10 +4,8 @@ Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWri
   allocWrite(aWrite),cacheType(cType) {
   offsetSize = log2(bs);
   size_t i = 1024;
-  while (i/1000 != capacity) {
-    i *= 2;
-  }
-  capacity = i;
+  
+  capacity *= i;
   if (type == 0) { // Fully Associtive
     indexSize = type;
   } else {

@@ -26,6 +26,10 @@ void Simulation::printResult() {
   // Print that result with numbers like the one in website, calculating stuff should be straightforward
 }
 
+void assignCaches(Cache * c1, Cache * c2) {
+  
+}
+
 void Simulation::formCaches(std::vector<std::string> caches) {
   std::vector<std::string>::iterator it;
   size_t cacheSize = 0;
