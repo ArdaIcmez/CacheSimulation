@@ -1,4 +1,5 @@
 #include <queue>
+
 int main (void) {
 
   std::map<size_t, std::queue<size_t> > fifoMap;
@@ -9,7 +10,6 @@ int main (void) {
   size_t way = fifoMap[index].front();
   fifoMap[index].pop();
   return way;
-
-  
   return 0; 
+
 }
