@@ -43,6 +43,7 @@ void Cache::printCache(){
 
 size_t Cache::checkReplacement(size_t index) {
   // Go to that index in the map, and figure out the block to replace
+
   return 0;
 }
 

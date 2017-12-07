@@ -2,6 +2,7 @@
 #include <map>
 #include <cmath>
 #include "instruction.h"
+#include <queue>
 #include <vector>
 
 #define HIT 0
@@ -20,8 +21,9 @@ class Cache {
   char cacheType;
   size_t indexSize;
   size_t offsetSize;
-  //Need to add different stuff for replacement algorithm
+//Need to add different stuff for replacement algorithm
 Map_t myCache;
+ std::map<size_t, std::queue<size_t> > fifoMap;
  public:
  Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, bool isWrite);
