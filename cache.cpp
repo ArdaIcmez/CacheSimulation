@@ -58,20 +58,8 @@ size_t Cache::checkReplacement(size_t index) {
   size_t result = 0;
   switch (replAlgo) {
   case 'L': //Least recently used alrogithm
-   /*
-   if (lruMap[index].empty()) {
-	for(size_t i = 0; i<type; i++) {
-          lruMap[index].push_back(i); 
-       } 
-   }
-   size_t way = lruMap[index].front();
-   lruMap[index].pop_front(); 
-   lruMap[index].push_back(way); 
-   return way; 
-  //NOTE NEED TO DO FOLLOWING FOR EVERY HIT:
-  //lruMap[index].remove(way); 
-  //lruMap[index].push_back(way);   
-   */
+   result = lruMap[index].front();
+   lruMap[index].pop_front();
     break;
   case 'R': //Random number algorithm
     srand((unsigned)time(0));
@@ -82,6 +70,17 @@ size_t Cache::checkReplacement(size_t index) {
     }
     break;
   case 'N': //Not most recently used algorithm
+    if (type == 1) {
+      return 0;
+    }
+    do {
+      srand((unsigned)time(0));
+      if(type == 0) {
+      result = (rand() % (int)(pow(2, indexSize)));
+      } else {
+	result = (rand() % type);
+      }
+    } while (result == lruMap[index].back());
 
     break;
   case 'F': //Fifo algorithm
