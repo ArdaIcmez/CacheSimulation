@@ -60,6 +60,12 @@ size_t Cache::checkReplacement(size_t index) {
 
     break;
   case 'F': //Fifo algorithm
+    if(fifoMap[index].empty()) {
+      return 0; 
+    }
+    size_t way = fifoMap[index].front();
+    fifoMap[index].pop();
+    return way;
 
     break;
   default :
