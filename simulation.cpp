@@ -101,10 +101,10 @@ t) {
 
   //Prints: Demand miss rate
   std::cout<<" Demand Miss Rate  ";
-  for(std::vector<double>::iterator it = demandMisses.begin(); it!=demandMisses.end(); ++it)\
- {
-    std::cout<<"     "<<std::setw(11)<<std::fixed<<std::setprecision(4)<<*it/noTotal;
-  }
+  for(std::vector<double>::iterator it = demandMisses.begin(); it!=demandMisses.end(); ++it) \
+    {
+   std::cout<<"     "<<std::setw(11)<<std::fixed<<std::setprecision(4)<<*it/noTotal;
+    }
   std::cout<<std::endl;
 
   //Prep for Compulsory Misses Line
