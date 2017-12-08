@@ -98,7 +98,12 @@ void Simulation::start(char *filename) {
       //Get the result of checkHit of that cache
       int result = c1->checkHit(line,type);
       if (c1->isDirty) {
-	c2->checkHit(c1->dirtyAddress,type);
+	std::stringstream ss ;
+	ss << (c1->dirtyAddress).substr(0,2);
+	c1->dirtyAddress = (c1->dirtyAddress).substr(2);
+	int dType;
+	ss >> dType;
+	analyseAdd(dType,c2->checkHit(c1->dirtyAddress,dType),2);
 	c1->isDirty = false;
       }
       if (result != HIT && c2 != NULL) {

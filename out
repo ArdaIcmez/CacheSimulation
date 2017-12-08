@@ -1,5 +1,0 @@
-instruction.cpp: In constructor 'Instruction::Instruction(const string&, int, int, int)':
-instruction.cpp:6:17: error: 'std::stringstream {aka class std::__cxx11::basic_stringstream<char>}' has no member named 'string'
-   original = ss.string();
-                 ^
-make: *** [instruction.o] Error 1
