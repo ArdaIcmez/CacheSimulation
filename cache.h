@@ -26,7 +26,7 @@ class Cache {
   //Data structures for replacement algorithms
   Map_t myCache;
   std::map<size_t, std::queue<size_t> > fifoMap;
-  std::set<size_t> tags;
+  std::set<std::pair<size_t, size_t> > tags;
   std::map<size_t, std::list<size_t> > lruMap;//front is LRU, back is MRU 
  public:
   bool isDirty;

@@ -61,7 +61,7 @@ Read           Write            Misc\n";
   std::cout<<"Demand Feteches    ";
   for(std::vector<double>::iterator it = demandFetches.begin(); it!=demandFetches.end(); ++i\
 t) {
-    std::cout<<"          "<<std::setw(6)<<*it;
+    std::cout<<"     "<<std::setw(11)<<*it;
   }
   std::cout<<std::endl;
 
@@ -69,7 +69,7 @@ t) {
   std::cout<<" Fraction of Total ";
   for(std::vector<double>::iterator it = demandFetches.begin(); it!=demandFetches.end(); ++i\
 t) {
-    std::cout<<"          "<<std::setw(6)<<std::fixed<<std::setprecision(4)<<*it/noTotal;
+    std::cout<<"     "<<std::setw(11)<<std::fixed<<std::setprecision(4)<<*it/noTotal;
   }
   std::cout<<std::endl<<std::endl;
 
@@ -95,7 +95,7 @@ t) {
   std::cout<<"Demand Misses      "<<std::setprecision(0);
   for(std::vector<double>::iterator it = demandMisses.begin(); it!=demandMisses.end(); ++it)\
  {
-    std::cout<<"          "<<std::setw(6)<<*it;
+    std::cout<<"     "<<std::setw(11)<<*it;
   }
   std::cout<<std::endl;
 
@@ -103,7 +103,7 @@ t) {
   std::cout<<" Demand Miss Rate  ";
   for(std::vector<double>::iterator it = demandMisses.begin(); it!=demandMisses.end(); ++it)\
  {
-    std::cout<<"          "<<std::setw(6)<<std::fixed<<std::setprecision(4)<<*it/noTotal;
+    std::cout<<"     "<<std::setw(11)<<std::fixed<<std::setprecision(4)<<*it/noTotal;
   }
   std::cout<<std::endl;
 
@@ -127,7 +127,7 @@ t) {
 
   std::cout<<"  Compulsory Misses"<<std::setprecision(0);
   for(std::vector<double>::iterator it = CoMisses.begin(); it!=CoMisses.end(); ++it) {
-    std::cout<<"          "<<std::setw(6)<<*it;
+    std::cout<<"     "<<std::setw(11)<<*it;
   }
   std::cout<<std::endl;
 
@@ -151,7 +151,7 @@ t) {
 
   std::cout<<"  Capacity Misses  "<<std::setprecision(0);
   for(std::vector<double>::iterator it = CaMisses.begin(); it!=CaMisses.end(); ++it) {
-    std::cout<<"          "<<std::setw(6)<<*it;
+    std::cout<<"     "<<std::setw(11)<<*it;
   }
   std::cout<<std::endl;
 
@@ -176,7 +176,7 @@ t) {
   //Print Conflict Misses Line
   std::cout<<"  Conflict Misses  "<<std::setprecision(0);
   for(std::vector<double>::iterator it = ConMisses.begin(); it!=ConMisses.end(); ++it) {
-    std::cout<<"          "<<std::setw(6)<<*it;
+    std::cout<<"     "<<std::setw(11)<<*it;
   }
   std::cout<<std::endl;
  

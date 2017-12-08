@@ -22,22 +22,23 @@ int Cache::checkHit(const std::string &instr,int typeI) {
   int result = COMP;
   size_t replIndex = 0;
   //Check the map if it's a hit or a miss
-  //  std::cout << curInstr.index <<" "<<curInstr.tag <<" "<<curInstr.offset << std::endl;
+  if (tags.find(std::make_pair(curInstr.index,curInstr.tag)) == tags.end()) { // First time for tag
+    tags.insert(std::make_pair(curInstr.index,curInstr.tag)); //COMP
+  } else {
+    result = ((type == 0) ? CAP : CONF);
+  }
   if (myCache.find(curInstr.index) == myCache.end()){
     insertCache(curInstr,0,false); // COMP, replIndex is 0
   } else {
     std::vector<std::pair<std::pair<size_t, bool>,std::string> >::iterator it;
     bool hit = false;
     for (it = myCache[curInstr.index].begin(); it != myCache[curInstr.index].end(); ++it) {
-      // std::cout <<" tag of the first one:" << ((*it).first).first << " tag of the second one" << curInstr.tag << std::endl;
       if (((*it).first).first == curInstr.tag) {
-	//std::cout << (*it).first.first<<" What I'm checking with"<<std::endl;
 	hit = true;
 	replIndex = it - myCache[curInstr.index].begin(); // get index of hit
 	break;
       }
     }
-    //std::cout << "gonna check hit "<<hit << std::endl; 
     if (hit) {
       result = HIT; //HIT
       //Change the bit to dirty if needed
@@ -50,11 +51,6 @@ int Cache::checkHit(const std::string &instr,int typeI) {
 	insertCache(curInstr,0,false); // COMP
 	replIndex = myCache[curInstr.index].size() - 1;//Last element of v
       } else { // Replacement
-	if (tags.find(curInstr.tag) == tags.end()) { // First time for tag
-	  tags.insert(curInstr.tag); //COMP
-	} else {
-	  result = ((type == 0) ? CAP : CONF);
-	}
 	replIndex = checkReplacement(curInstr.index);//index is the one here
 	insertCache(curInstr, replIndex, true);
       }
@@ -111,15 +107,19 @@ size_t Cache::checkReplacement(size_t index) {
     if (type == 1) {
       return 0;
     }
-    do {
-      srand((unsigned)time(0));
+    srand((unsigned)time(0));
+    if(type == 0) {
+      result = rand() % (capacity/blockSize);
+    } else {
+      result = (rand() % type);
+    }
+    while(result == lruMap[index].back()) {
       if(type == 0) {
-      result = (rand() % (int)(pow(2, indexSize)));
+	result = rand() % (capacity/blockSize);
       } else {
 	result = (rand() % type);
       }
-    } while (result == lruMap[index].back());
-
+    }
     break;
   case 'F': //Fifo algorithm
     if (fifoMap[index].empty()) {
@@ -139,8 +139,8 @@ void Cache::insertCache(const Instruction &instr, size_t replaceIndex, bool isRe
   if (instr.typeInstr == 1 && allocWrite == false) {
     return;
   }
-  fifoMap[instr.index].push(instr.tag); //Add to our fifo map
   if (isReplace) {
+    fifoMap[instr.index].push(replaceIndex); //Add to our fifo map
     if (((myCache[instr.index]).at(replaceIndex).first).second == 1) {
       isDirty = true;
       dirtyAddress = (myCache[instr.index]).at(replaceIndex).second;
@@ -153,6 +153,7 @@ void Cache::insertCache(const Instruction &instr, size_t replaceIndex, bool isRe
     ((myCache[instr.index]).at(replaceIndex).first).first = instr.tag;
     (myCache[instr.index]).at(replaceIndex).second = instr.original;
   } else {
+    fifoMap[instr.index].push(myCache[instr.index].size()); //Add to our fifo map
     if (instr.typeInstr == 1) {
       myCache[instr.index].push_back(std::make_pair(std::make_pair(instr.tag,1),instr.original));
     } else {
