@@ -11,7 +11,7 @@ class Instruction {
   std::string original;
  Instruction():index(0),offset(0),tag(0),typeInstr(0),original("init"){};
     Instruction(const Instruction &rhs): index(rhs.index), offset(rhs.offset), tag(rhs.tag), typeInstr(rhs.typeInstr) {}
-  Instruction& operator=(const Instruction &rhs) {
+  /*Instruction& operator=(const Instruction &rhs) {
     if (this != &rhs) {
       index = rhs.index;
       offset = rhs.offset;
@@ -19,5 +19,5 @@ class Instruction {
       typeInstr = rhs.typeInstr;
     }
     return *this;
-  }
+  }*/
 };

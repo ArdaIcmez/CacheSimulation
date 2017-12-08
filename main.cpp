@@ -70,6 +70,7 @@ int main(int argc, char **argv) {
   Simulation *sim = new Simulation();
   sim->formCaches(readCmdline(argc, argv));
   sim->start(filename);
+  sim->printResult();
   delete sim;
   return EXIT_SUCCESS;
 }

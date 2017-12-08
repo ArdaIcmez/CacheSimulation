@@ -2,8 +2,8 @@
 #include <iomanip>
 #include <vector>
 int main(void) {
-for(size_t = 0; i < 2; i++) {
-Stats instrnSt_t = instrSt[i];
+for(size_t i = 0; i < 2; i++) {
+Stats instrSt_t = instrSt[i];
 Stats readSt_t = readSt[i]; 
 Stats writeSt_t = writeSt[i];
 Stats miscSt_t = miscSt[i];   

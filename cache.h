@@ -34,7 +34,7 @@ class Cache {
   Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, int typeI);
  size_t checkReplacement(size_t index);
- void insertCache(Instruction instr, size_t replaceIndex, bool isReplace);
+ void insertCache(const Instruction &instr, size_t replaceIndex, bool isReplace);
  void printCache();
  void addUsedList(size_t setIndex, size_t index);
 };

@@ -1,5 +1,6 @@
 #include "instruction.h"
-Instruction::Instruction(const std::string &instr, int indSize, int offSize, int typeI){
+#include <iostream>
+Instruction::Instruction(const std::string &instr, int indSize, int offSize, int typeI): index(0), offset(0), tag(0), typeInstr(-1), original(" "){
   typeInstr =typeI;
   std::stringstream ss;
   ss << typeI;

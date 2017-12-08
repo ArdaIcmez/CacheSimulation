@@ -22,18 +22,22 @@ int Cache::checkHit(const std::string &instr,int typeI) {
   int result = COMP;
   size_t replIndex = 0;
   //Check the map if it's a hit or a miss
-  if (myCache.find(curInstr.tag) == myCache.end()){
+  //  std::cout << curInstr.index <<" "<<curInstr.tag <<" "<<curInstr.offset << std::endl;
+  if (myCache.find(curInstr.index) == myCache.end()){
     insertCache(curInstr,0,false); // COMP, replIndex is 0
   } else {
     std::vector<std::pair<std::pair<size_t, bool>,std::string> >::iterator it;
     bool hit = false;
     for (it = myCache[curInstr.index].begin(); it != myCache[curInstr.index].end(); ++it) {
+      // std::cout <<" tag of the first one:" << ((*it).first).first << " tag of the second one" << curInstr.tag << std::endl;
       if (((*it).first).first == curInstr.tag) {
+	//std::cout << (*it).first.first<<" What I'm checking with"<<std::endl;
 	hit = true;
 	replIndex = it - myCache[curInstr.index].begin(); // get index of hit
 	break;
       }
     }
+    //std::cout << "gonna check hit "<<hit << std::endl; 
     if (hit) {
       result = HIT; //HIT
       //Change the bit to dirty if needed
@@ -41,7 +45,8 @@ int Cache::checkHit(const std::string &instr,int typeI) {
 	(myCache[curInstr.index][replIndex].first).second = 1;
       }
     } else { //Miss
-      if ((myCache[curInstr.index]).size() < pow(2,indexSize)) { //Have space
+      size_t capBlock = (type == 0) ? capacity/blockSize : type;
+      if ((myCache[curInstr.index]).size() < capBlock) { //Have space
 	insertCache(curInstr,0,false); // COMP
 	replIndex = myCache[curInstr.index].size() - 1;//Last element of v
       } else { // Replacement
@@ -130,7 +135,7 @@ size_t Cache::checkReplacement(size_t index) {
   return result;
 }
 
-void Cache::insertCache(Instruction instr, size_t replaceIndex, bool isReplace) {
+void Cache::insertCache(const Instruction &instr, size_t replaceIndex, bool isReplace) {
   if (instr.typeInstr == 1 && allocWrite == false) {
     return;
   }
@@ -149,9 +154,9 @@ void Cache::insertCache(Instruction instr, size_t replaceIndex, bool isReplace) 
     (myCache[instr.index]).at(replaceIndex).second = instr.original;
   } else {
     if (instr.typeInstr == 1) {
-      myCache[instr.index].push_back(std::make_pair(std::make_pair(1,instr.tag),instr.original));
+      myCache[instr.index].push_back(std::make_pair(std::make_pair(instr.tag,1),instr.original));
     } else {
-      myCache[instr.index].push_back(std::make_pair(std::make_pair(0,instr.tag),instr.original));
+      myCache[instr.index].push_back(std::make_pair(std::make_pair(instr.tag,0),instr.original));
     }
   }
 }
