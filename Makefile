@@ -1,5 +1,5 @@
 GPP=g++
-CPPFLAGS= -Wall -Werror -Wunused -pedantic -std=gnu++03
+CPPFLAGS= -Wall -Werror -Wunused -pedantic -std=gnu++03 -O3
 simulation : main.o cache.o instruction.o simulation.o
 	$(GPP) -o simulation main.o cache.o instruction.o simulation.o
 %.o:%.cpp
