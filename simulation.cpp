@@ -24,12 +24,15 @@ void Simulation::analyseAdd(int type, int status, int level) {
 }
 
 void Simulation::printResult() {
-for(size_t i = 0; i < 2; i++) {
+  size_t noLoop = 1;
+  if (!l2.empty()) {
+    noLoop++;
+  }
+for(size_t i = 0; i <noLoop; i++) {
 Stats instrSt_t = instrSt[i];
 Stats readSt_t = readSt[i]; 
 Stats writeSt_t = writeSt[i];
 Stats miscSt_t = miscSt[i];   
- std::cout << instrSt_t.hit << " " << readSt_t.hit << " " << writeSt_t.hit << std::endl;
 //Prints: Metrics Total Instrn Data Read Write Misc
   std::cout<<"Metrics                      Total           Instrn           Data            \
 Read           Write            Misc\n";
@@ -252,12 +255,13 @@ void Simulation::start(char *filename) {
       //Get the result of checkHit of that cache
       int result = c1->checkHit(line,type);
       if (c1->isDirty && c2 != NULL) {
-	std::cout <<"DIRTY BIT BABY" << std::endl;
+	//	std::cout <<"DIRTY BIT BABY" << std::endl;
 	std::stringstream ss ;
 	ss << (c1->dirtyAddress).substr(0,2);
 	c1->dirtyAddress = (c1->dirtyAddress).substr(2);
 	int dType;
 	ss >> dType;
+	//std::cout << dType << " " << c1->dirtyAddress << std::endl;
 	analyseAdd(dType,c2->checkHit(c1->dirtyAddress,dType),1);
 	c1->isDirty = false;
       }
