@@ -97,6 +97,10 @@ void Simulation::start(char *filename) {
       }
       //Get the result of checkHit of that cache
       int result = c1->checkHit(line,type);
+      if (c1->isDirty) {
+	c2->checkHit(c1->dirtyAddress,type);
+	c1->isDirty = false;
+      }
       if (result != HIT && c2 != NULL) {
 	analyseAdd(type,c2->checkHit(line,type),2);
       }

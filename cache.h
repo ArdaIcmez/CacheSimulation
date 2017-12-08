@@ -12,7 +12,7 @@
 #define CAP 3
 
 class Cache {
-  typedef std::map<int,std::vector<std::pair<size_t,bool> > > Map_t;
+  typedef std::map<int,std::vector<std::pair<std::pair<size_t,bool>,std::string> > > Map_t;
   size_t level;
   size_t capacity;
   size_t blockSize;
@@ -29,7 +29,9 @@ class Cache {
   std::set<size_t> tags;
   std::map<size_t, std::list<size_t> > lruMap;//front is LRU, back is MRU 
  public:
- Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
+  bool isDirty;
+  std::string dirtyAddress;
+  Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
  int checkHit(const std::string &instr, int typeI);
  size_t checkReplacement(size_t index);
  void insertCache(Instruction instr, size_t replaceIndex, bool isReplace);

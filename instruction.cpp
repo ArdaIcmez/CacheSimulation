@@ -1,6 +1,10 @@
 #include "instruction.h"
 Instruction::Instruction(const std::string &instr, int indSize, int offSize, int typeI){
-  typeInstr =typeI; 
+  typeInstr =typeI;
+  std::stringstream ss;
+  ss << typeI;
+  original = ss.str();
+  original += " " + instr;
   parseInstr(instr, indSize, offSize);
 }
 

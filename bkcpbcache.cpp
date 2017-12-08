@@ -1,6 +1,5 @@
 #include "cache.h"
 #include <algorithm>
-
 Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType):
   level(lvl), capacity(cap), blockSize(bs), type(assoc), replAlgo(rAlgo),
   allocWrite(aWrite),cacheType(cType),isDirty(false) {
@@ -25,10 +24,10 @@ int Cache::checkHit(const std::string &instr,int typeI) {
   if (myCache.find(curInstr.tag) == myCache.end()){
     insertCache(curInstr,0,false); // COMP, replIndex is 0
   } else {
-    std::vector<std::pair<std::pair<size_t, bool>,std::string> >::iterator it;
+    std::vector<std::pair<size_t, bool> >::iterator it;
     bool hit = false;
     for (it = myCache[curInstr.index].begin(); it != myCache[curInstr.index].end(); ++it) {
-      if (((*it).first).first == curInstr.tag) {
+      if ((*it).first == curInstr.tag) {
 	hit = true;
 	replIndex = it - myCache[curInstr.index].begin(); // get index of hit
 	break;
@@ -38,7 +37,7 @@ int Cache::checkHit(const std::string &instr,int typeI) {
       result = HIT; //HIT
       //Change the bit to dirty if needed
       if (curInstr.typeInstr == 1) {
-	(myCache[curInstr.index][replIndex].first).second = 1;
+	myCache[curInstr.index][replIndex].second = 1;
       }
     } else { //Miss
       if ((myCache[curInstr.index]).size() < pow(2,indexSize)) { //Have space
@@ -136,22 +135,17 @@ void Cache::insertCache(Instruction instr, size_t replaceIndex, bool isReplace) 
   }
   fifoMap[instr.index].push(instr.tag); //Add to our fifo map
   if (isReplace) {
-    if (((myCache[instr.index]).at(replaceIndex).first).second == 1) {
-      isDirty = true;
-      dirtyAddress = (myCache[instr.index]).at(replaceIndex).second;
-    }
     if (instr.typeInstr == 1) {
-      ((myCache[instr.index]).at(replaceIndex).first).second = 1;
+      (myCache[instr.index]).at(replaceIndex).second = 1;
     } else {
-      ((myCache[instr.index]).at(replaceIndex).first).second = 0;
+      (myCache[instr.index]).at(replaceIndex).second = 0;
     }
-    ((myCache[instr.index]).at(replaceIndex).first).first = instr.tag;
-    (myCache[instr.index]).at(replaceIndex).second = instr.original;
+    (myCache[instr.index]).at(replaceIndex).first = instr.tag;
   } else {
     if (instr.typeInstr == 1) {
-      myCache[instr.index].push_back(std::make_pair(std::make_pair(1,instr.tag),instr.original));
+      myCache[instr.index].push_back(std::make_pair(1,instr.tag));
     } else {
-      myCache[instr.index].push_back(std::make_pair(std::make_pair(0,instr.tag),instr.original));
+      myCache[instr.index].push_back(std::make_pair(0,instr.tag));
     }
   }
 }
