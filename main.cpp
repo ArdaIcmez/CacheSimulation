@@ -17,8 +17,9 @@ std::vector<std::string> readCmdline (int argc, char** argv) {
   std::string l2Type = " ";
   std::string l21Specs = " ";
   std::string l22Specs = " ";
+  std::string diffMisses = " ";
   int charRead;
-  while ((charRead = getopt(argc, argv, "a:b:c:d:e:f:")) != -1) {
+  while ((charRead = getopt(argc, argv, "a:b:c:d:e:f:g:")) != -1) {
     switch (charRead) {
     case 'a' :
       l1Type = optarg;
@@ -38,11 +39,17 @@ std::vector<std::string> readCmdline (int argc, char** argv) {
     case 'f' :
       l22Specs = optarg;
       break;
+    case 'g' :
+      diffMisses = optarg;
+      break;
     default :
       abort();
     }
   }
   std::vector<std::string> caches;
+  if (diffMisses == "Y") {
+    caches.push_back("YES");
+  }
   if (l1Type != " ") {
     if (l1Type == "S") {
       caches.push_back(cachify("1I",l11Specs));
@@ -59,6 +66,7 @@ std::vector<std::string> readCmdline (int argc, char** argv) {
       caches.push_back(cachify("2U", l21Specs));
     }
   }
+ 
   return caches;
 }
 
