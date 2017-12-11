@@ -15,7 +15,7 @@ Cache::Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWri
   }
 }
 
-int Cache::checkHit(const std::string &instr,int typeI) {
+int Cache::checkHit(const std::string &instr,const int typeI) {
   //The heart of the homework, most things will be done here depending on different types
   Instruction current(instr, indexSize, offsetSize, typeI);
   curInstr = current;

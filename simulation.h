@@ -13,10 +13,10 @@ class Simulation {
   std::vector<Cache> faL2;
   bool classifyMisses;
  Simulation() : classifyMisses(false) {}
- void analyseAdd(int type, int status, int level);
+ void analyseAdd(const int type, int status, int level);
   void printResult();
-  void assignCaches(Cache ** c1, Cache ** c2, int type);
-  void assignFACaches(Cache ** c1, Cache ** c2, int type);
+  void assignCaches(Cache ** c1, Cache ** c2,const int type);
+  void assignFACaches(Cache ** c1, Cache ** c2,const int type);
   void formCaches(std::vector<std::string> caches);
   void start(char *filename);
 };

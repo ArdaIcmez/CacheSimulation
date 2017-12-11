@@ -32,7 +32,7 @@ class Cache {
   bool isDirty;
   std::string dirtyAddress;
   Cache(size_t lvl, size_t cap, size_t bs, int assoc, char rAlgo, bool aWrite, char cType);
- int checkHit(const std::string &instr, int typeI);
+ int checkHit(const std::string &instr,const int typeI);
  size_t checkReplacement(size_t index);
  void insertCache(const Instruction &instr, size_t replaceIndex, bool isReplace);
  void printCache();

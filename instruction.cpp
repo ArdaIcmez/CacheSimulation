@@ -3,7 +3,7 @@
 Instruction::Instruction(const std::string &instr, int indSize, int offSize, int typeI): index(0), offset(0), tag(0), typeInstr(-1), original(" "){
   typeInstr =typeI;
   std::stringstream ss;
-  ss << typeI;
+  ss << typeInstr;
   original = ss.str();
   original += " " + instr;
   parseInstr(instr, indSize, offSize);

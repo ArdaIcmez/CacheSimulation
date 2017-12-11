@@ -5,7 +5,7 @@
 #include "simulation.h"
 #include <iomanip>
 
-void Simulation::analyseAdd(int type, int status, int level) {
+void Simulation::analyseAdd(const int type, int status, int level) {
   //type is the type of instruction, status is the result of hit or miss
   switch (type) {
   case 0 :
@@ -166,7 +166,7 @@ t) {
  }
 }
 
-void Simulation::assignCaches(Cache ** c1, Cache ** c2, int type) {
+void Simulation::assignCaches(Cache ** c1, Cache ** c2,const int type) {
   /*
     First cache is always instruction, second cache is always data
 */
@@ -190,7 +190,7 @@ void Simulation::assignCaches(Cache ** c1, Cache ** c2, int type) {
   }
 }
 
-void Simulation::assignFACaches(Cache ** c1, Cache ** c2, int type) {
+void Simulation::assignFACaches(Cache ** c1, Cache ** c2,const int type) {
   /*
     First cache is always instruction, second cache is always data
 */
@@ -297,11 +297,11 @@ void Simulation::start(char *filename) {
 	int fares1 = fac1->checkHit(line2,type2);
 	if (fac1->isDirty && fac2 != NULL) {
 	  std::stringstream sss ;
-	  sss << (fac1->dirtyAddress).substr(0,2);
+	  sss << (fac1->dirtyAddress).substr(0,1);
 	  fac1->dirtyAddress = (fac1->dirtyAddress).substr(2);
-	  int dType;
-	  sss >> dType;
-	  analyseAdd(dType,fac2->checkHit(fac1->dirtyAddress,dType),3);
+	  int d2Type;
+	  sss >> d2Type;
+	  analyseAdd(d2Type,fac2->checkHit(fac1->dirtyAddress,d2Type),3);
 	  fac1->isDirty = false;
 	}
 	if (fares1 != HIT && fac2 != NULL) {
@@ -309,9 +309,9 @@ void Simulation::start(char *filename) {
 	  analyseAdd(type2,resc2,3);
 	}
 	analyseAdd(type2,fares1,2);
-      }
-      
+      }      
     }
+    
     if (classifyMisses) {
       instrSt[0].capMiss = instrSt[0].confMiss - (instrSt[2].hit - instrSt[0].hit);
       instrSt[0].confMiss = (instrSt[2].hit - instrSt[0].hit);
@@ -321,7 +321,6 @@ void Simulation::start(char *filename) {
       writeSt[0].confMiss = (writeSt[2].hit - writeSt[0].hit);
       miscSt[0].capMiss = miscSt[0].confMiss - (miscSt[2].hit - miscSt[0].hit);
       miscSt[0].confMiss += (miscSt[2].hit - miscSt[0].hit);
-
       if (instrSt[1].confMiss != 0) {
 	instrSt[1].capMiss = instrSt[1].confMiss - (instrSt[3].hit - instrSt[1].hit);
 	instrSt[1].confMiss = (instrSt[3].hit - instrSt[1].hit);
