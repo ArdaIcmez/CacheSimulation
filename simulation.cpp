@@ -29,11 +29,11 @@ void Simulation::printResult() {
     noLoop++;
   }
 for(size_t i = 0; i <noLoop; i++) {
-Stats instrSt_t = instrSt[i];
-Stats readSt_t = readSt[i]; 
-Stats writeSt_t = writeSt[i];
-Stats miscSt_t = miscSt[i];   
-//Prints: Metrics Total Instrn Data Read Write Misc
+  Stats instrSt_t = instrSt[i];
+  Stats readSt_t = readSt[i]; 
+  Stats writeSt_t = writeSt[i];
+  Stats miscSt_t = miscSt[i];   
+  //Prints: Metrics Total Instrn Data Read Write Misc
   std::cout<<"Metrics                      Total           Instrn           Data            \
 Read           Write            Misc\n";
   std::cout<<"-----------------            ------          ------          ------          -\
@@ -279,7 +279,7 @@ void Simulation::start(char *filename) {
       int result = c1->checkHit(line,type);
       if (c1->isDirty && c2 != NULL) {
 	std::stringstream ss ;
-	ss << (c1->dirtyAddress).substr(0,2);
+	ss << (c1->dirtyAddress).substr(0,1);
 	c1->dirtyAddress = (c1->dirtyAddress).substr(2);
 	int dType;
 	ss >> dType;
@@ -292,7 +292,6 @@ void Simulation::start(char *filename) {
 	analyseAdd(type,resc2,1);
       }
       analyseAdd(type,result,0);
-
       if (classifyMisses) {
 	assignFACaches(&fac1, &fac2, type2);
 	int fares1 = fac1->checkHit(line2,type2);
@@ -322,16 +321,24 @@ void Simulation::start(char *filename) {
       writeSt[0].confMiss = (writeSt[2].hit - writeSt[0].hit);
       miscSt[0].capMiss = miscSt[0].confMiss - (miscSt[2].hit - miscSt[0].hit);
       miscSt[0].confMiss += (miscSt[2].hit - miscSt[0].hit);
-      
-      instrSt[1].capMiss = instrSt[1].confMiss - (instrSt[3].hit - instrSt[1].hit);
-      instrSt[1].confMiss = (instrSt[3].hit - instrSt[1].hit);
-      readSt[1].capMiss = readSt[1].confMiss - (readSt[2].hit - readSt[1].hit);
-      readSt[1].confMiss = (readSt[3].hit - readSt[1].hit);
-      writeSt[1].capMiss = writeSt[1].confMiss - (writeSt[3].hit - writeSt[1].hit);
-      writeSt[1].confMiss = (writeSt[3].hit - writeSt[1].hit);
-      miscSt[1].capMiss = miscSt[1].confMiss - (miscSt[3].hit - miscSt[1].hit);
-      miscSt[1].confMiss += (miscSt[3].hit - miscSt[1].hit);
-      
+
+      if (instrSt[1].confMiss != 0) {
+	instrSt[1].capMiss = instrSt[1].confMiss - (instrSt[3].hit - instrSt[1].hit);
+	instrSt[1].confMiss = (instrSt[3].hit - instrSt[1].hit);
+      }
+      if (readSt[1].confMiss != 0) {
+	readSt[1].capMiss = readSt[1].confMiss - (readSt[3].hit - readSt[1].hit);
+	readSt[1].confMiss = (readSt[3].hit - readSt[1].hit);
+      }
+      if (writeSt[1].confMiss != 0) {
+	writeSt[1].capMiss = writeSt[1].confMiss - (writeSt[3].hit - writeSt[1].hit);
+	writeSt[1].confMiss = (writeSt[3].hit - writeSt[1].hit);
+      }
+      if (miscSt[1].confMiss != 0) {
+	miscSt[1].capMiss = miscSt[1].confMiss - (miscSt[3].hit - miscSt[1].hit);
+	miscSt[1].confMiss += (miscSt[3].hit - miscSt[1].hit);
+      }
+            
     }
   } else {
     std::cerr << "Couldn't open the test file!" << std::endl;
